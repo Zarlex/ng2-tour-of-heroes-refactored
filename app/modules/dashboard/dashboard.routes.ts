@@ -1,12 +1,14 @@
 import {NgModule}             from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-const routes: Routes = [
-    {path: '', redirectTo: '/dashboard', pathMatch: 'full'}
-];
+import {DashboardIndexComponent}   from './components/index/index.component';
 
+const routes: Routes = [
+    {path: 'dashboard', component: DashboardIndexComponent}
+];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class MainRoutingModule {}
+export class DashboardRoutingModule {
+}

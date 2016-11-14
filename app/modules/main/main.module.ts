@@ -7,17 +7,14 @@ import './rxjs-extensions';
 
 // Imports for loading & configuring the in-memory web api
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {InMemoryDataService}  from './in-memory-data.service';
+import {InMemoryDataService} from './services/in-memory-data.service';
 
-import {AppComponent}  from './app.component';
-import {HeroesComponent}  from './heroes.component';
-import {HeroDetailComponent} from './hero-detail.component';
-import {HeroSearchComponent} from './hero-search.component'
-import {DashboardComponent} from './dashboard.component';
+import {HeroesModule} from '../heroes/heroes.module';
+import {DashboardModule} from '../dashboard/dashboard.module';
 
-import {HeroService} from './hero.service';
+import {AppComponent}     from './components/app/app.component';
 
-import {AppRoutingModule}     from './app-routing.module';
+import {MainRoutingModule}     from './main.routes';
 
 @NgModule({
     imports: [
@@ -25,17 +22,14 @@ import {AppRoutingModule}     from './app-routing.module';
         FormsModule,
         HttpModule,
         InMemoryWebApiModule.forRoot(InMemoryDataService),
-        AppRoutingModule
+        HeroesModule,
+        DashboardModule,
+        MainRoutingModule
     ],
     declarations: [
-        AppComponent,
-        DashboardComponent,
-        HeroesComponent,
-        HeroDetailComponent,
-        HeroSearchComponent
+        AppComponent
     ],
-    bootstrap: [AppComponent],
-    providers: [HeroService]
+    bootstrap: [AppComponent]
 })
-export class AppModule {
+export class MainModule {
 }
