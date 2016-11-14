@@ -2,15 +2,15 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params}   from '@angular/router';
 import {Location}                 from '@angular/common';
 
-import {Hero} from './hero';
-import {HeroService} from './hero.service';
+import {Hero} from '../../models/hero.model';
+import {HeroService} from '../../services/data.service';
 
 @Component({
     moduleId: module.id,
     selector: 'my-hero-detail',
-    templateUrl: 'hero-detail.template.html'
+    templateUrl: 'detail.template.html'
 })
-export class HeroDetailComponent implements OnInit {
+export class HeroesDetailComponent implements OnInit {
     @Input()
     hero: Hero;
 
