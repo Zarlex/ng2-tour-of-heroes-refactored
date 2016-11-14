@@ -7,7 +7,7 @@ import 'backbone';
 import {Model, Collection} from 'backbone';
 
 declare namespace Backbone {
-    export function sync(method: string, model: Model|Collection, options?: any): any;
+    export function sync(method: string, model: Model|Collection<Model>, options?: any): any;
 
     export function ajax(options?: JQueryAjaxSettings): any;
 }
@@ -44,7 +44,7 @@ export class BackboneModule {
         };
 
         const superSync = Backbone.sync;
-        Backbone.sync = (method: string, model: Model|Collection, options?: any) => {
+        Backbone.sync = (method: string, model: Model|Collection<Model>, options?: any) => {
             // we have to set the flag to wait true otherwise all cases were you want to delete mutliple entries will break
             // https://github.com/jashkenas/backbone/issues/3534
             // This flag means that the server has to confirm the creation/deletion before the model will be added/removed to the
