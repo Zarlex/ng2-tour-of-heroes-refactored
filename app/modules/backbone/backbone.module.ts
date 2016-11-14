@@ -5,6 +5,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {isUndefined} from 'underscore';
 import 'backbone';
 import {Model, Collection} from 'backbone';
+import {BaseModel} from './models/backbone.model';
+import {BaseCollection} from './collections/backbone.collection';
 
 declare namespace Backbone {
     export function sync(method: string, model: Model|Collection<Model>, options?: any): any;
@@ -14,8 +16,10 @@ declare namespace Backbone {
 
 @NgModule({
     imports: [BrowserModule],
-    exports: [],
-    declarations: [],
+    providers: [
+        BaseCollection,
+        BaseModel
+    ]
 })
 export class BackboneModule {
     constructor(private http: Http) {
