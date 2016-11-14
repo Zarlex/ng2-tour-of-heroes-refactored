@@ -8,8 +8,8 @@ keep it scalable for the future. Some of the refactorings had a bigger impact an
 done in a day. As there was the request for new features some of the refactorings had to be done
 in parallel. This was sometimes a hard task to do so.
 
-Anyway, as Google decided to develop the version AngularJS 2 that to not make it backwards compatible to 
-Angular 1, i had to face the truth that i have to start from the beginning (again).
+Anyway, as Google decided to develop the version AngularJS 2 and to make it not backwards compatible to 
+Angular 1, i had to face the truth that i had to start from the beginning (again).
 Besides all the new stuff that the AngularJS team has thrown into the boat like
 TypeScript, Observables and of course AngularJS itself, some of things started looking familiar.
 
@@ -69,4 +69,62 @@ So in this step i'm moving all the files into a modular file structure.
 To see the result you can checkout the branch 2-file-structure
 ```
 git checkout tags/2-file-structure
+```
+## Step 2-Preparation to support BackboneJS
+In this step i'm preparing the application to support BackboneJS.
+Wait what, why BackboneJS?!
+
+You may asking why adding another dependency to your project.
+So far we created HeroService with the typical CRUD operations. 
+But when you add more modules with CRUD operations to your application 
+you you will find yourself copying the same boilerplate code from service to service:
+```
+
+
+@Injectable()
+export class HeroService {
+    private heroesUrl = 'app/heroes';
+
+    private headers = new Headers({'Content-Type': 'application/json'});
+
+    private handleError(error: any): Promise<any> { ... }
+
+    constructor(private http: Http) { }
+
+    getHeroes(): Promise<Hero[]> { ... }
+
+    getHero(id: number): Promise<Hero> { ... }
+
+    update(hero: Hero): Promise<Hero> { ... }
+
+    create(name: string): Promise<Hero> { ... }
+
+    delete(id: number): Promise<void> { ... }
+}
+```
+As soon as you start repetitiously copy boilerplate code something is 
+rotten in your application architecture.
+
+The solution for this boilerplate code is to use the model and collection
+provided by BackboneJS.
+
+We already have defined our Hero model:
+```
+export class Hero {
+    id: number;
+    name: string;
+}
+```
+Why not giving that model more functionality so it can create, read, update
+and destroy data by itself? With the Model of BackboneJs we can exactly do
+that.
+
+But before we can do that we have to couple BackboneJS with AngularJS. We have to
+overwrite the `Backbone.ajax` with the `Request` provided by AngularJS.
+I'm creating a new module called `Backbone` where we are configuring it
+in the module constructor.
+To see the result you can checkout the branch 3-backbone-config
+```
+git checkout tags/3-backbone-config
+npm install
 ```
