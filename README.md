@@ -20,7 +20,7 @@ So i'm going to refactor the codebase.
 ## To follow along:
 ```
 git clone git@github.com:Zarlex/ng2-tour-of-heroes-refactored.git
-git checkout tags/tour-of-heroes
+git checkout tags/1-tour-of-heroes
 ```
 This will checkout out the revision how it has looked like after i finished the tutorial
 
