@@ -9,6 +9,7 @@ import './rxjs-extensions';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from './services/in-memory-data.service';
 
+import {BackboneModule} from '../backbone/backbone.module';
 import {HeroesModule} from '../heroes/heroes.module';
 import {DashboardModule} from '../dashboard/dashboard.module';
 
@@ -22,6 +23,7 @@ import {MainRoutingModule}     from './main.routes';
         FormsModule,
         HttpModule,
         InMemoryWebApiModule.forRoot(InMemoryDataService),
+        BackboneModule,
         HeroesModule,
         DashboardModule,
         MainRoutingModule
