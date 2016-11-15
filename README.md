@@ -128,3 +128,63 @@ To see the result you can checkout the branch 3-backbone-config
 git checkout tags/3-backbone-config
 npm install
 ```
+## Step 3-Replace hero data services with BackboneJS
+In the backbone module we have created a base model and a base collection
+that extend from the BackboneJS model and collection. 
+
+They should provide the base functionality and all other models and collections 
+should extend from them.
+For example we defined a default parse method that is called by
+BackboneJS automatically after a successful fetch.
+
+The collection got also the functionality that it has queryParams that
+are  passed as options into the fetch method. We need this for
+the search functionality of our search component.
+
+We extend our hero model with the baseModel from the backbone module.
+After we have defined a urlRoot, it is ready to make requests to our api.
+
+We are also moving the validation logic that was put in the hero index
+component before into the validate function of the model
+```
+add(name: string): void {
+  name = name.trim();
+  if (!name) { return; }`
+  ...
+}
+```
+Validation logic should never be put into a controller but rather into
+the model. Therefore, BackboneJS provides a validation function that is 
+called before the model is created. When it returns false it will not 
+make a request. We overwrite the default BackboneJS validation method, 
+that is doing nothing by default with our own validation logic.
+
+After that we define our heroes collection that will hold multiple hero models.
+By putting the annotation `@Injectable()` over the class export we can use
+the model and collection like a normal AngularJS service and are able to 
+inject it into our components.
+
+Now we are going through each component and replace the hero service with
+the BackboneJS one.
+When we have finished we can remove the services of the heroes module.
+
+Another benefit you will get by using BackboneJS the data logic is extracted 
+from any angular logic. 
+
+A new layer is born—the data layer. 
+
+AngularJS is still responsible for all the ui logic but the data will be 
+provided by the BackboneJS powered data layer. 
+
+You can rip out this data layer from your AngularJS application and 
+use it for any other applications as well. 
+The data layer can be seen as a small JavaScript SDK for your API. 
+
+More information to that topic can be found in this 
+[blogpost](http://blog.mwaysolutions.com/2015/05/07/backbonejs-meets-angularjs/)
+
+To see the result you can checkout the branch 4-backbone-refactoring
+```
+git checkout tags/4-backbone-refactoring
+```
+ 
