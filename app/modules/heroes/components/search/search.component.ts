@@ -4,7 +4,7 @@ import {Router}            from '@angular/router';
 import {Observable}        from 'rxjs/Observable';
 import {Subject}           from 'rxjs/Subject';
 
-import {HeroSearchService} from '../../services/search.service';
+import {Heroes} from '../../collections/heroes.collection';
 import {Hero} from '../../models/hero.model';
 
 @Component({
@@ -12,13 +12,12 @@ import {Hero} from '../../models/hero.model';
     selector: 'hero-search',
     templateUrl: 'search.template.html',
     styleUrls: ['search.style.css'],
-    providers: [HeroSearchService]
+    providers: [Heroes]
 })
 export class HeroesSearchComponent implements OnInit {
-    heroes: Observable<Hero[]>;
     private searchTerms = new Subject<string>();
 
-    constructor(private heroSearchService: HeroSearchService,
+    constructor(private heroes: Heroes,
                 private router: Router) {
     }
 
@@ -28,19 +27,16 @@ export class HeroesSearchComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.heroes = this.searchTerms
+        this.searchTerms
             .debounceTime(300)        // wait for 300ms pause in events
             .distinctUntilChanged()   // ignore if next search term is same as previous
-            .switchMap(term => term   // switch to new observable each time
-                // return the http search observable
-                ? this.heroSearchService.search(term)
-                // or the observable of empty heroes if no search term
-                : Observable.of<Hero[]>([]))
-            .catch(error => {
-                // TODO: real error handling
-                console.log(error);
-                return Observable.of<Hero[]>([]);
-            });
+            .switchMap(term => {
+                if (term) {
+                    this.heroes.queryParams.name = term;
+                    this.heroes.fetch();
+                }
+                return Observable.of<Heroes>(this.heroes);
+            }).toPromise();
     }
 
     gotoDetail(hero: Hero): void {

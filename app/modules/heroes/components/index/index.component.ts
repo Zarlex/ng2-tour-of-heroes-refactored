@@ -2,27 +2,23 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {Hero} from '../../models/hero.model';
-import {HeroService} from '../../services/data.service';
+import {Heroes} from '../../collections/heroes.collection';
 
 @Component({
     moduleId: module.id,
     selector: 'my-heroes',
     templateUrl: 'index.template.html',
-    styleUrls: ['index.style.css']
+    styleUrls: ['index.style.css'],
+    providers: [Heroes]
 })
 export class HeroesIndexComponent implements OnInit {
-    heroes: Hero[];
     selectedHero: Hero;
 
-    constructor(private heroService: HeroService, private router: Router) {
-    }
-
-    getHeroes(): void {
-        this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+    constructor(private heroes: Heroes, private router: Router) {
     }
 
     ngOnInit(): void {
-        this.getHeroes();
+        this.heroes.fetch();
     }
 
     onSelect(hero: Hero): void {
@@ -34,21 +30,6 @@ export class HeroesIndexComponent implements OnInit {
     }
 
     add(name: string): void {
-        name = name.trim();
-        if (!name) { return; }
-        this.heroService.create(name)
-            .then(hero => {
-                this.heroes.push(hero);
-                this.selectedHero = null;
-            });
-    }
-
-    delete(hero: Hero): void {
-        this.heroService
-            .delete(hero.id)
-            .then(() => {
-                this.heroes = this.heroes.filter(h => h !== hero);
-                if (this.selectedHero === hero) { this.selectedHero = null; }
-            });
+        this.heroes.create({name: name});
     }
 }

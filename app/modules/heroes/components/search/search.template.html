@@ -2,9 +2,9 @@
   <h4>Hero Search</h4>
   <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
   <div>
-    <div *ngFor="let hero of heroes | async"
+    <div *ngFor="let hero of heroes.models"
          (click)="gotoDetail(hero)" class="search-result" >
-      {{hero.name}}
+      {{hero.get('name')}}
     </div>
   </div>
 </div>
