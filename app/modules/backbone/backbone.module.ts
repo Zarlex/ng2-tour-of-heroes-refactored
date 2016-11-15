@@ -1,5 +1,5 @@
 import {NgModule}      from '@angular/core';
-import {Http, RequestOptions, Headers, Response} from '@angular/http';
+import {Http, RequestOptions, Headers, Response, URLSearchParams} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {isUndefined} from 'underscore';
@@ -23,11 +23,12 @@ declare namespace Backbone {
 })
 export class BackboneModule {
     constructor(private http: Http) {
-        Backbone.ajax = (options: JQueryAjaxSettings) => {
+        Backbone.ajax = (options: any) => {
             let requestOption = new RequestOptions({
                 method: options.type,
                 body: options.data,
                 headers: new Headers(options.headers),
+                search: options.search || new URLSearchParams(),
                 url: options.url
             });
             return http.request(options.url, new RequestOptions(requestOption))
