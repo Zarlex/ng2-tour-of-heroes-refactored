@@ -32,7 +32,7 @@ npm start
 ```
 
 ## Step 1—File Structure
-I don't that it is a good idea to have all the files in one folder.
+I don't think that it is a good idea to have all the files in one folder.
 Scrolling through a big file list makes it really hard to find the file
 you are looking for.
 Having to many subfolders will also slow down your development speed 
@@ -70,7 +70,7 @@ To see the result you can checkout the branch 2-file-structure
 ```
 git checkout tags/2-file-structure
 ```
-## Step 2-Preparation to support BackboneJS
+## Step 2—Preparation to support BackboneJS
 In this step i'm preparing the application to support BackboneJS.
 Wait what, why BackboneJS?!
 
@@ -128,7 +128,7 @@ To see the result you can checkout the branch 3-backbone-config
 git checkout tags/3-backbone-config
 npm install
 ```
-## Step 3-Replace hero data services with BackboneJS
+## Step 3—Replace hero data services with BackboneJS
 In the backbone module we have created a base model and a base collection
 that extend from the BackboneJS model and collection. 
 
